@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
-const TechIndustry = () => {
-  const userId = '123'; // Replace with actual user ID
+const Construction = () => {
+  const userId = '345'; // Replace with actual user ID
   const [todoTasks, setTodoTasks] = useState([]);
   const [draftingTasks, setDraftingTasks] = useState([]);
   const [inReviewTasks, setInReviewTasks] = useState([]);
@@ -16,7 +16,9 @@ const TechIndustry = () => {
   const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/tasks/${userId}`)
+    axios.get(`http://localhost:5000/construction/${userId}`)
+
+
       .then((response) => {
         const tasks = response.data;
         setTodoTasks(tasks.filter(task => task.status === 'todo'));
@@ -29,7 +31,9 @@ const TechIndustry = () => {
 
   const moveTask = (task, source, target, newStatus) => {
     source((prevTasks) => prevTasks.filter((t) => t._id !== task._id));
-    axios.put(`http://localhost:5000/tasks/${task._id}`, { ...task, status: newStatus })
+    axios.put(`http://localhost:5000/construction/${task._id}`, { ...task, status: newStatus })
+
+
       .then((response) => {
         target((prevTasks) => [...prevTasks, response.data]);
       })
@@ -40,7 +44,9 @@ const TechIndustry = () => {
     event.preventDefault();
     const taskName = event.target.elements.taskName.value;
     const dueDate = event.target.elements.dueDate.value;
-    axios.post('http://localhost:5000/tasks', { taskName, dueDate, userId })
+    axios.post('http://localhost:5000/construction', { taskName, dueDate, userId })
+
+
       .then((response) => {
         setTodoTasks((prevTasks) => [...prevTasks, response.data]);
         setIsFormVisible(false);
@@ -58,7 +64,7 @@ const TechIndustry = () => {
   };
 
   const handleSafetyMeasuresClick = () => {
-    navigate('/safety-measures'); // Navigate to the safety measures page
+    navigate('/const-safety'); // Navigate to the safety measures page
   };
 
   return (
@@ -66,11 +72,11 @@ const TechIndustry = () => {
       {/* Navbar */}
       <nav className="bg-gray-100 text-black shadow-md w-full fixed top-0 left-0 z-10">
         <div className="max-w-full px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-semibold">Tech Industry</h1>
+          <h1 className="text-2xl font-semibold">Construction</h1>
 
           {/* Right side - Links */}
           <div className="flex space-x-4 sm:space-x-8">
-            <a href="/dashboard" className="bg-green-500 hover:bg-green-700 text-lg font-bold text-white py-2 px-4 rounded transition duration-200">View Dashboard</a>
+            <a href="/const-worker-dashboard" className="bg-green-500 hover:bg-green-700 text-lg font-bold text-white py-2 px-4 rounded transition duration-200">View Dashboard</a>
             <button
               className="bg-green-500 hover:bg-green-700 text-lg font-bold text-white py-2 px-4 rounded transition duration-200"
               onClick={() => setIsFormVisible(true)}
@@ -249,4 +255,4 @@ const TechIndustry = () => {
   );
 };
 
-export default TechIndustry;
+export default Construction;

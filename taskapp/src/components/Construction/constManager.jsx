@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Manager = () => {
+const ConstManager = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [employeeName, setEmployeeName] = useState('');
   const [employeeEmail, setEmployeeEmail] = useState('');
@@ -15,11 +15,11 @@ const Manager = () => {
       employeeEmail,
       taskName,
       dueDate,
-      userId: '123',
+      userId: '345',
       status: 'todo' // Set initial status to 'todo'
     };
 
-    axios.post('http://localhost:5000/tasks', task)
+    axios.post('http://localhost:5000/construction', task)
       .then((response) => {
         // Handle successful response
         console.log('Task added:', response.data);
@@ -40,11 +40,11 @@ const Manager = () => {
       {/* Navbar */}
       <nav className="bg-gray-100 text-black shadow-md w-full fixed top-0 left-0 z-10">
         <div className="max-w-full px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-semibold">Tech Industry</h1>
+          <h1 className="text-2xl font-semibold">Construction</h1>
 
           {/* Right side - Links */}
           <div className="flex space-x-4 sm:space-x-8">
-            <a href="/dashboard" className="text-xl text-black">View Dashboard</a>
+            <a href="/const-worker-dashboard" className="text-xl text-black">View Dashboard</a>
             <button
               className="bg-green-500 hover:bg-green-700 text-lg font-bold text-white py-2 px-4 rounded transition duration-200"
               onClick={() => setIsFormVisible(true)}
@@ -112,4 +112,4 @@ const Manager = () => {
   );
 };
 
-export default Manager;
+export default ConstManager;

@@ -16,7 +16,7 @@ ChartJS.register(
   Legend
 );
 
-const DashboardCharts = () => {
+const ConstCharts = () => {
   // Line Chart Data
   const lineData = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -98,7 +98,7 @@ const DashboardCharts = () => {
       },
       title: {
         display: true,
-        text: 'Task Completion by Team Member',
+        text: 'Task Completion by Worker',
       },
     },
     scales: {
@@ -146,17 +146,17 @@ const DashboardCharts = () => {
 
   // Radar Chart Data
   const radarData = {
-    labels: ['On-Time Delivery', 'Task Quality', 'Communication', 'Collaboration', 'Creativity'],
+    labels: ['Site Preparation', 'Foundation Work', 'Framing', 'Roofing', 'Electrical Work','Plumbing','Finishing Work','Inspection'],
     datasets: [
       {
         label: 'Alice',
-        data: [85, 90, 75, 80, 95],
+        data: [85, 90, 75, 80, 95 ,70 , 80 , 80],
         backgroundColor: 'rgba(255, 99, 132, 0.2)',
         borderColor: 'rgba(255, 99, 132, 1)',
       },
       {
         label: 'Bob',
-        data: [80, 85, 70, 85, 80],
+        data: [80, 85, 70, 85, 80 , 57 , 80 , 90, 80],
         backgroundColor: 'rgba(54, 162, 235, 0.2)',
         borderColor: 'rgba(54, 162, 235, 1)',
       },
@@ -211,4 +211,4 @@ const DashboardCharts = () => {
   );
 };
 
-export default DashboardCharts;
+export default ConstCharts;

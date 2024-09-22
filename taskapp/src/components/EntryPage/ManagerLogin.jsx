@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GoogleLogin } from '@react-oauth/google';
+
 
 const ManagerLogin = () => {
   const [selectedRole, setSelectedRole] = useState('');
@@ -12,11 +12,20 @@ const ManagerLogin = () => {
     const password = e.target.password.value;
 
     // Hardcoded credentials
-    const validEmail = 'admin.22aim@kongu.edu';
-    const validPassword = 'admin';
+    const techEmail = 'techadmin@gmail.com';
+    const techPassword = 'techadmin';
 
-    if (email === validEmail && password === validPassword && selectedRole) {
+    const constEmail='constadmin@gmail.com';
+    const constPassword='constadmin';
+
+
+    if (email === techEmail && password === techPassword && selectedRole) {
       navigate('/manager-dashboard'); // Redirect to manager-specific page after sign up
+    } else {
+      alert('Invalid credentials or role not selected');
+    }
+    if (email === constEmail && password === constPassword && selectedRole) {
+      navigate('/construction-manager-dashboard'); // Redirect to manager-specific page after sign up
     } else {
       alert('Invalid credentials or role not selected');
     }
@@ -26,12 +35,10 @@ const ManagerLogin = () => {
     <div className="flex items-center justify-center h-screen bg-gradient-to-r from-gray-200 via-blue-300 to-gray-200">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
         <div className="flex justify-between mb-6">
-          <h1 className="text-2xl font-bold">Create Account (Manager)</h1>
+          <h1 className="text-2xl font-bold">Login (Manager)</h1>
         </div>
-        <div className="mb-4">
-          <GoogleLogin onSuccess={(response) => console.log('Google login response:', response)} />
-        </div>
-        <span className="block text-gray-600 mb-4">or use your email for registration</span>
+        
+        
         <form onSubmit={handleSignUp}>
           <input type="text" name="name" placeholder="Name" required className="w-full p-2 mb-4 border border-gray-300 rounded" />
           <input type="email" name="email" placeholder="Email" required className="w-full p-2 mb-4 border border-gray-300 rounded" />

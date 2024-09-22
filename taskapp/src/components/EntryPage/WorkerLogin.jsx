@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GoogleLogin } from '@react-oauth/google';
+
 
 const WorkerLogin = () => {
   const [selectedRole, setSelectedRole] = useState('');
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
@@ -13,11 +14,20 @@ const WorkerLogin = () => {
     e.preventDefault();
 
     // Hardcoded credentials
-    const validEmail = 'haris.22aim@kongu.edu';
-    const validPassword = 'admin';
+    const techEmail = 'hari@gmail.com';
+    const techPassword = 'hari';
 
-    if (email === validEmail && password === validPassword && password === confirmPassword && selectedRole) {
+    const constEmail = 'anand@gmail.com';
+    const constPassword = 'anand';
+
+
+    if (email === techEmail && password === techPassword && password === confirmPassword && selectedRole) {
       navigate('/tech-industry'); // Redirect to worker-specific page after sign up
+    } else {
+      alert('Invalid credentials or passwords do not match');
+    }
+    if (email === constEmail && password === constPassword && password === confirmPassword && selectedRole) {
+      navigate('/construction'); // Redirect to worker-specific page after sign up
     } else {
       alert('Invalid credentials or passwords do not match');
     }
@@ -27,19 +37,17 @@ const WorkerLogin = () => {
     <div className="flex items-center justify-center h-screen bg-gradient-to-r from-gray-200 via-blue-300 to-gray-200">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
         <div className="flex justify-between mb-6">
-          <h1 className="text-2xl font-bold">Create Account (Worker)</h1>
+          <h1 className="text-2xl font-bold">Login (Worker)</h1>
         </div>
-        <div className="mb-4">
-          <GoogleLogin onSuccess={(response) => console.log('Google login response:', response)} />
-        </div>
-        <span className="block text-gray-600 mb-4">or use your email for registration</span>
+        
+        
         <form onSubmit={handleSignUp}>
           <input
             type="text"
             placeholder="Name"
             required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             className="w-full p-2 mb-4 border border-gray-300 rounded"
           />
           <input

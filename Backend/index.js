@@ -1,3 +1,4 @@
+//index.js
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
@@ -9,7 +10,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
-// Route to handle chatbot queries
+
 app.post('/ask-query', async (req, res) => {
   const { query } = req.body;
   try {
@@ -23,7 +24,7 @@ app.post('/ask-query', async (req, res) => {
   }
 });
 
-// Connect to both databases
+
 const techIndustryDb = mongoose.createConnection('mongodb://localhost:27017/tech-industry', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -34,7 +35,18 @@ const constructionIndustryDb = mongoose.createConnection('mongodb://localhost:27
   useUnifiedTopology: true,
 });
 
-// Define task schema
+const healthcareIndustryDb= mongoose.createConnection('mongodb://localhost:27017/healthcare',{
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+const fireserviceIndustryDb= mongoose.createConnection('mongodb://localhost:27017/fireservice',{
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+
+
 const taskSchema = new mongoose.Schema({
   employeeName: {
     type: String,
@@ -52,6 +64,11 @@ const taskSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  todayDate: {
+    type: Date,
+    required: true,
+  },
+   
   userId: {
     type: String,
     required: true,
@@ -63,13 +80,16 @@ const taskSchema = new mongoose.Schema({
   },
 });
 
-// Tech Industry Task Model
-const TechTask = techIndustryDb.model('TechTask', taskSchema);
 
-// Construction Industry Task Model
+const TechTask = techIndustryDb.model('TechTask', taskSchema, 'tasks');
+
 const ConstructionTask = constructionIndustryDb.model('ConstructionTask', taskSchema);
 
-// API routes for tech workers
+
+const HealthTask =healthcareIndustryDb.model('healthTask' , taskSchema);
+
+const fireserviceTask =fireserviceIndustryDb.model('fireserviceTask' , taskSchema)
+
 app.get('/tech-tasks/:userId', async (req, res) => {
   const tasks = await TechTask.find({ userId: req.params.userId });
   res.json(tasks);
@@ -91,7 +111,7 @@ app.delete('/tech-tasks/:id', async (req, res) => {
   res.json({ message: 'Task deleted' });
 });
 
-// API routes for construction workers
+
 app.get('/construction/:userId', async (req, res) => {
   const constasks = await ConstructionTask.find({ userId: req.params.userId });
   res.json(constasks);
@@ -113,13 +133,57 @@ app.delete('/construction/:id', async (req, res) => {
   res.json({ message: 'Task deleted' });
 });
 
-// Proxy Flask API
+
+app.get('/healthcare/:userId', async (req, res) => {
+  const htasks = await HealthTask.find({ userId: req.params.userId });
+  res.json(htasks);
+});
+
+app.post('/healthcare', async (req, res) => {
+  const htask = new HealthTask(req.body); 
+  await htask.save();
+  res.json(htask);
+});
+
+app.put('/healthcare/:id', async (req, res) => {
+  const htask = await HealthTask.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  res.json(htask);
+});
+
+app.delete('/healthcare/:id', async (req, res) => {
+  await HealthTask.findByIdAndDelete(req.params.id);
+  res.json({ message: 'Task deleted' });
+});
+
+
+
+app.get('/fireservice/:userId', async (req, res) => {
+  const ftasks = await fireserviceTask.find({ userId: req.params.userId });
+  res.json(ftasks);
+});
+
+app.post('/fireservice', async (req, res) => {
+  const ftask = new fireserviceTask(req.body); 
+  await ftask.save();
+  res.json(ftask);
+});
+
+app.put('/fireservice/:id', async (req, res) => {
+  const ftask = await fireserviceTask.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  res.json(ftask);
+});
+
+app.delete('/fireservice/:id', async (req, res) => {
+  await fireserviceTask.findByIdAndDelete(req.params.id);
+  res.json({ message: 'Task deleted' });
+});
+
 const { createProxyMiddleware } = require('http-proxy-middleware');
 app.use('/api/chat', createProxyMiddleware({
     target: 'http://localhost:5001',
     changeOrigin: true,
 }));
 
-// Start the server
+
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT);

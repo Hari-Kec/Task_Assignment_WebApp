@@ -12,6 +12,7 @@ const HealthManager = () => {
   const [todayDate, settodayDate] = useState('');
   const [newEmployeeName, setNewEmployeeName] = useState('');
   const [newEmployeeDepartment, setNewEmployeeDepartment] = useState('');
+  const [managerName, setManagerName] = useState('');
   const [employees, setEmployees] = useState([
     { name: 'Akash', department: 'Child Specialist', tasks: [] },
     { name: 'Rifath', department: 'Physiotheraphy', tasks: [] },
@@ -36,6 +37,13 @@ const HealthManager = () => {
       userId: '678',
       status: 'todo',
     };
+    useEffect(() => {
+      // Retrieve the manager's name from localStorage
+      const storedName = localStorage.getItem('managerName');
+      if (storedName) {
+        setManagerName(storedName);
+      }
+    }, []);
 
     const updatedEmployees = employees.map((employee) => {
       if (taskEmployeeNames.includes(employee.name)) {
@@ -107,7 +115,7 @@ const HealthManager = () => {
       {/* Navbar */}
       <nav className="bg-gray-100 text-black shadow-md w-full fixed top-0 left-0 z-10">
         <div className="max-w-full px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-semibold">Construction Management</h1>
+          <h1 className="text-2xl font-semibold">HealthCare Management</h1>
           <div className="flex space-x-4 sm:space-x-8">
             <a href="/health-worker-dashboard" className="text-xl text-black">View Dashboard</a>
             <button
@@ -122,7 +130,7 @@ const HealthManager = () => {
 
       <div className="pt-20 px-4 sm:px-10 py-5 mt-10 w-full">
         <div className="bg-white shadow-md rounded-lg p-4">
-          <h2 className="text-2xl font-bold mb-4">DEAN : Dr.RAVI</h2>
+        <h2 className="text-2xl font-bold mb-4">Dean Name: {managerName}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {employees.map((employee, index) => (
               <div key={index} className="bg-gray-200 p-4 rounded-lg shadow">

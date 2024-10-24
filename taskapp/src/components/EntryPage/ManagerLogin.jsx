@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-
-import loginImage from '../../assets/taskLogo.png';
+import loginImage from '../../assets/taskLogo.png'; // Path to your image asset
 
 const ManagerLogin = () => {
-  const [isLoginMode, setIsLoginMode] = useState(true); // To toggle between login and register
+  const [isLoginMode, setIsLoginMode] = useState(true);
   const [selectedRole, setSelectedRole] = useState('');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
@@ -22,7 +21,7 @@ const ManagerLogin = () => {
 
   const toggleMode = () => {
     setIsLoginMode(!isLoginMode);
-    resetForm(); // Reset form fields when switching between login and register
+    resetForm(); 
   };
 
   const resetForm = () => {
@@ -35,7 +34,6 @@ const ManagerLogin = () => {
   };
 
   const handleLogin = () => {
-    // Pre-defined manager credentials (for login example)
     const techEmail = 'techadmin@gmail.com';
     const techPassword = 'techadmin';
 
@@ -48,7 +46,6 @@ const ManagerLogin = () => {
     const fireEmail = 'fireadmin@gmail.com';
     const firePassword = 'fireadmin';
 
-    // Login logic: Navigate based on correct credentials and role
     if (email && password && selectedRole) {
       if (
         (email === techEmail && password === techPassword && selectedRole === 'Tech Manager') ||
@@ -56,6 +53,7 @@ const ManagerLogin = () => {
         (email === healthEmail && password === healthPassword && selectedRole === 'Healthcare Manager') ||
         (email === fireEmail && password === firePassword && selectedRole === 'FireService Manager')
       ) {
+        localStorage.setItem('managerName', selectedRole); // Store the role as the manager's name
         switch (selectedRole) {
           case 'Tech Manager':
             navigate('/manager-dashboard');
@@ -81,7 +79,6 @@ const ManagerLogin = () => {
   };
 
   const handleRegister = () => {
-    // Registration logic: All fields must be filled
     if (!name || !email || !password || !confirmPassword || !selectedRole || !companyName) {
       alert('Please fill in all fields.');
       return;
@@ -92,9 +89,9 @@ const ManagerLogin = () => {
       return;
     }
 
-    // Perform registration logic (e.g., send to backend)
+    localStorage.setItem('managerName', name); // Store the manager's name after successful registration
     alert(`Registered successfully as ${selectedRole}!`);
-    navigate('/manager-dashboard'); // Navigate after successful registration
+    navigate('/manager-dashboard');
   };
 
   const handleSubmit = (e) => {

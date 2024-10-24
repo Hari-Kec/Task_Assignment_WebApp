@@ -50,6 +50,7 @@ console.log("Current Date and Time: ", currentDateTime);
   };
 
   const deleteTask = (taskId, status) => {
+    if (window.confirm("Are you sure you want to delete this task?")) {
     axios.delete(`http://localhost:5000/tech-tasks/${taskId}`)
       .then(() => {
         // Remove the task from the corresponding list based on status
@@ -62,8 +63,11 @@ console.log("Current Date and Time: ", currentDateTime);
         } else if (status === 'done') {
           setDoneTasks((prevTasks) => prevTasks.filter((task) => task._id !== taskId));
         }
+        
       })
+    
       .catch((error) => console.error('Error deleting task:', error));
+    }
   };
 
   const handleFormSubmit = (e) => {
@@ -213,20 +217,26 @@ console.log("Current Date and Time: ", currentDateTime);
                   className="w-full p-2 mb-4 border border-gray-300 rounded"
                   required
                 />
-                <input
-                  type="date"
-                  value={dueDate}
-                  onChange={(e) => setDueDate(e.target.value)}
-                  className="w-full p-2 mb-4 border border-gray-300 rounded"
-                  required
-                />
-                <input
-                  type="date"
-                  value={todayDate}
-                  onChange={(e) => settodayDate(e.target.value)}
-                  className="w-full p-2 mb-4 border border-gray-300 rounded"
-                  required
-                />
+                <label htmlFor="dueDate" className="block mb-2 text-gray-700">Due Date</label>
+<input
+  id="dueDate"
+  type="date"
+  value={dueDate}
+  onChange={(e) => setDueDate(e.target.value)}
+  className="w-full p-2 mb-4 border border-gray-300 rounded"
+  required
+/>
+
+<label htmlFor="creationDate" className="block mb-2 text-gray-700">Date of Task Creation</label>
+<input
+  id="creationDate"
+  type="date"
+  value={todayDate}
+  onChange={(e) => settodayDate(e.target.value)}
+  className="w-full p-2 mb-4 border border-gray-300 rounded"
+  required
+/>
+
                 <button
                   type="submit"
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -320,39 +330,50 @@ console.log("Current Date and Time: ", currentDateTime);
         </div>
 
         {/* Query Form */}
-        {isQueryFormVisible && (
-          <div className="mt-4">
-            <form onSubmit={handleQuerySubmit}>
-              <input
-                type="text"
-                placeholder="Ask your question..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded"
-                required
-              />
-              <button
-                type="submit"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
-              >
-                Submit Query
-              </button>
-              <button
-                type="button"
-                onClick={() => setIsQueryFormVisible(false)} // Hide query form
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-2 ml-2"
-              >
-                Cancel
-              </button>
-            </form>
-            {response && (
-              <div className="mt-4">
-                <h3 className="font-semibold">Response:</h3>
-                <p>{response}</p>
-              </div>
-            )}
-          </div>
+        <div className={`mt-4 transform transition-all duration-500 ease-in-out ${isQueryFormVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 -translate-y-10 scale-90 pointer-events-none'}`}>
+  {isQueryFormVisible && (
+    <form onSubmit={handleQuerySubmit} className="transition-all">
+      <input
+        type="text"
+        placeholder="Ask your question..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+        required
+      />
+      <button
+        type="submit"
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2 transition-all duration-300 ease-in-out transform hover:scale-105"
+      >
+        Submit Query
+      </button>
+      <button
+        type="button"
+        onClick={() => setIsQueryFormVisible(false)} // Hide query form
+        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-2 ml-2 transition-all duration-300 ease-in-out transform hover:scale-105"
+      >
+        Cancel
+      </button>
+    </form>
+  )}
+  {response && (
+    <div className="mt-4 transition-opacity duration-500 ease-in-out">
+      <h3 className="font-semibold mb-2">Response:</h3>
+      <div className="bg-gray-100 p-4 rounded-md shadow-sm">
+        {response.includes('```') ? (
+          // Check if response contains markdown code blocks
+          <pre className="bg-gray-900 text-white p-4 rounded-md overflow-x-auto">
+            <code>{response.replace(/```/g, '')}</code> {/* Remove markdown-style ticks */}
+          </pre>
+        ) : (
+          <p className="whitespace-pre-wrap">{response}</p>
         )}
+      </div>
+    </div>
+  )}
+</div>
+
+
       </div>
     </div>
   );

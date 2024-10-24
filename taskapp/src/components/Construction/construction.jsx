@@ -236,39 +236,49 @@ const Construction = () => {
           </div>
 
           {/* Query Form */}
-          {isQueryFormVisible && (
-            <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white shadow-lg rounded-lg p-6 z-20">
-              <form onSubmit={handleQuerySubmit}>
-                <input
-                  type="text"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Ask something..."
-                  className="w-full p-2 mb-4 border border-gray-300 rounded"
-                  required
-                />
-                <button
-                  type="submit"
-                  className="bg-blue-500 hover:bg-blue-700 text-sm font-bold text-white py-2 px-4 rounded"
-                >
-                  Submit
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setIsQueryFormVisible(false)}
-                  className="ml-2 bg-gray-500 hover:bg-gray-700 text-sm font-bold text-white py-2 px-4 rounded"
-                >
-                  Cancel
-                </button>
-              </form>
-              {response && (
-                <div className="mt-4 p-2 border border-gray-300 rounded">
-                  <h3 className="font-bold">Response:</h3>
-                  <p>{response}</p>
-                </div>
-              )}
-            </div>
-          )}
+          <div className={`mt-4 transform transition-all duration-500 ease-in-out ${isQueryFormVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 -translate-y-10 scale-90 pointer-events-none'}`}>
+  {isQueryFormVisible && (
+    <form onSubmit={handleQuerySubmit} className="transition-all">
+      <input
+        type="text"
+        placeholder="Ask your question..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+        required
+      />
+      <button
+        type="submit"
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2 transition-all duration-300 ease-in-out transform hover:scale-105"
+      >
+        Submit Query
+      </button>
+      <button
+        type="button"
+        onClick={() => setIsQueryFormVisible(false)} // Hide query form
+        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-2 ml-2 transition-all duration-300 ease-in-out transform hover:scale-105"
+      >
+        Cancel
+      </button>
+    </form>
+  )}
+  {response && (
+    <div className="mt-4 transition-opacity duration-500 ease-in-out">
+      <h3 className="font-semibold mb-2">Response:</h3>
+      <div className="bg-gray-100 p-4 rounded-md shadow-sm">
+        {response.includes('```') ? (
+          // Check if response contains markdown code blocks
+          <pre className="bg-gray-900 text-white p-4 rounded-md overflow-x-auto">
+            <code>{response.replace(/```/g, '')}</code> {/* Remove markdown-style ticks */}
+          </pre>
+        ) : (
+          <p className="whitespace-pre-wrap">{response}</p>
+        )}
+      </div>
+    </div>
+  )}
+</div>
+
 
           {/* Drafting Column */}
           <div className="bg-white shadow-md rounded-lg p-4">

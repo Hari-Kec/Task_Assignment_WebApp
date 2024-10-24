@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {  useEffect,useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -13,6 +13,7 @@ const Manager = () => {
 
   const [newEmployeeName, setNewEmployeeName] = useState('');
   const [newEmployeeDepartment, setNewEmployeeDepartment] = useState('');
+  const [managerName, setManagerName] = useState('');
   const [employees, setEmployees] = useState([
     { name: 'Hari', department: 'Design', tasks: [] },
     { name: 'Ram', department: 'Web', tasks: [] },
@@ -67,6 +68,14 @@ const Manager = () => {
     setDueDate('');
     setIsTaskFormVisible(false);
   };
+  useEffect(() => {
+    // Retrieve the manager's name from localStorage
+    const storedName = localStorage.getItem('managerName');
+    if (storedName) {
+      setManagerName(storedName);
+    }
+  }, []);
+
 
   const handleAddEmployee = (e) => {
     e.preventDefault();
@@ -133,7 +142,7 @@ const Manager = () => {
 
       <div className="pt-20 px-4 sm:px-10 py-5 mt-10 w-full">
         <div className="bg-white shadow-md rounded-lg p-4">
-          <h2 className="text-2xl font-bold mb-4">Manager: RAM MOORTHY</h2>
+        <h2 className="text-2xl font-bold mb-4">Manager: {managerName}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {employees.map((employee, index) => (
               <div key={index} className="bg-gray-200 p-4 rounded-lg shadow">

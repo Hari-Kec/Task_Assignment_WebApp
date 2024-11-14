@@ -80,7 +80,7 @@ const ConstCharts = () => {
 
   // Bar Chart Data
   const barData = {
-    labels: ['Alice', 'Bob', 'Charlie', 'David'],
+    labels: ['Arjun', 'Megha', 'Rajesh'],
     datasets: [
       {
         label: 'Tasks Completed',
@@ -118,7 +118,7 @@ const ConstCharts = () => {
 
   // Stacked Bar Chart Data
   const stackedBarData = {
-    labels: ['Alice', 'Bob', 'Charlie', 'David'],
+    labels: ['Arjun', 'Megha', 'Rajesh'],
     datasets: [
       { label: 'To Do', data: [3, 2, 4, 1], backgroundColor: '#ff6384' },
       { label: 'In Progress', data: [2, 3, 1, 2], backgroundColor: '#36a2eb' },
@@ -149,13 +149,13 @@ const ConstCharts = () => {
     labels: ['Site Preparation', 'Foundation Work', 'Framing', 'Roofing', 'Electrical Work','Plumbing','Finishing Work','Inspection'],
     datasets: [
       {
-        label: 'Alice',
+        label: 'Arjun',
         data: [85, 90, 75, 80, 95 ,70 , 80 , 80],
         backgroundColor: 'rgba(255, 99, 132, 0.2)',
         borderColor: 'rgba(255, 99, 132, 1)',
       },
       {
-        label: 'Bob',
+        label: 'Megha',
         data: [80, 85, 70, 85, 80 , 57 , 80 , 90, 80],
         backgroundColor: 'rgba(54, 162, 235, 0.2)',
         borderColor: 'rgba(54, 162, 235, 1)',

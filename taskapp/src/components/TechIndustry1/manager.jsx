@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useEffect,useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -10,6 +10,7 @@ const Manager = () => {
   const [dueDate, setDueDate] = useState('');
   const [todayDate, settodayDate] = useState('');
   const [employeeEmail, setEmployeeEmail] = useState('');
+
   const [newEmployeeName, setNewEmployeeName] = useState('');
   const [newEmployeeDepartment, setNewEmployeeDepartment] = useState('');
   const [managerName, setManagerName] = useState('');
@@ -20,8 +21,8 @@ const Manager = () => {
   ]);
   
   const [employeeTasks, setEmployeeTasks] = useState({});
-  const [visibleStatus, setVisibleStatus] = useState({});
-  const navigate = useNavigate();
+  const [visibleStatus, setVisibleStatus] = useState({}); // Track which employee's status is visible
+  const navigate = useNavigate(); 
 
   const handleLogout = () => {
     navigate('/manager-login');
@@ -67,13 +68,14 @@ const Manager = () => {
     setDueDate('');
     setIsTaskFormVisible(false);
   };
-
   useEffect(() => {
+    // Retrieve the manager's name from localStorage
     const storedName = localStorage.getItem('managerName');
     if (storedName) {
       setManagerName(storedName);
     }
   }, []);
+
 
   const handleAddEmployee = (e) => {
     e.preventDefault();
@@ -82,12 +84,6 @@ const Manager = () => {
     setNewEmployeeName('');
     setNewEmployeeDepartment('');
     alert('Employee added successfully!');
-  };
-
-  const handleDeleteEmployee = (employeeName) => {
-    const updatedEmployees = employees.filter(employee => employee.name !== employeeName);
-    setEmployees(updatedEmployees);
-    alert(`Employee ${employeeName} deleted successfully!`);
   };
 
   const handleEmployeeSelection = (e) => {
@@ -115,13 +111,14 @@ const Manager = () => {
   };
 
   const handleShowStatusClick = (employeeName) => {
+    // Toggle visibility of the status
     setVisibleStatus((prev) => ({
       ...prev,
       [employeeName]: !prev[employeeName],
     }));
 
     if (!visibleStatus[employeeName]) {
-      fetchEmployeeTasks(employeeName);
+      fetchEmployeeTasks(employeeName); // Fetch tasks only if showing status
     }
   };
 
@@ -162,12 +159,6 @@ const Manager = () => {
                   onClick={() => handleShowStatusClick(employee.name)}
                 >
                   {visibleStatus[employee.name] ? 'Hide Status' : 'Show Status'}
-                </button>
-                <button
-                  className="mt-2 bg-red-500 hover:bg-red-700 text-white py-1 px-3 rounded transition duration-200 ml-2"
-                  onClick={() => handleDeleteEmployee(employee.name)}
-                >
-                  Delete
                 </button>
 
                 {/* Task Status Display */}
@@ -239,6 +230,7 @@ const Manager = () => {
           <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
             <h2 className="text-2xl font-bold mb-4">Assign Task to Employees</h2>
             <form onSubmit={handleTaskFormSubmit}>
+              {/* Multi-select dropdown */}
               <select
                 multiple
                 value={selectedEmployees}
@@ -269,29 +261,29 @@ const Manager = () => {
                 className="w-full p-2 mb-4 border border-gray-300 rounded"
                 required
               />
-              <div className="mb-4">
-                <label htmlFor="dueDate" className="block text-gray-700 mb-1">Due Date</label>
-                <input
-                  id="dueDate"
-                  type="date"
-                  value={dueDate}
-                  onChange={(e) => setDueDate(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded"
-                  required
-                />
-              </div>
+             <div className="mb-4">
+  <label htmlFor="dueDate" className="block text-gray-700 mb-1">Due Date</label>
+  <input
+    id="dueDate"
+    type="date"
+    value={dueDate}
+    onChange={(e) => setDueDate(e.target.value)}
+    className="w-full p-2 border border-gray-300 rounded"
+    required
+  />
+</div>
 
-              <div className="mb-4">
-                <label htmlFor="todayDate" className="block text-gray-700 mb-1">Today's Date</label>
-                <input
-                  id="todayDate"
-                  type="date"
-                  value={todayDate}
-                  onChange={(e) => settodayDate(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded"
-                  required
-                />
-              </div>
+<div className="mb-4">
+  <label htmlFor="todayDate" className="block text-gray-700 mb-1">Today's Date</label>
+  <input
+    id="todayDate"
+    type="date"
+    value={todayDate}
+    onChange={(e) => settodayDate(e.target.value)}
+    className="w-full p-2 border border-gray-300 rounded"
+    required
+  />
+</div>
 
               <div className="flex justify-between">
                 <button

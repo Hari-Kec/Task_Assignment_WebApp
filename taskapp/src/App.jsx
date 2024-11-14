@@ -11,6 +11,8 @@ import Safety from './components/TechIndustry/safety';
 import Manager from './components/TechIndustry/manager';
 import DashboardCharts from './components/TechIndustry/dashboard';
 
+import TechIndustry1 from './components/TechIndustry1/techIndustry';
+
 import Construction from './components/Construction/construction';
 import ConstManager from './components/Construction/constManager';
 import ConstCharts from './components/Construction/constDashboard';
@@ -35,6 +37,7 @@ const App = () => {
         <Route path="/manager-login" element={<ManagerLogin />} />
 
         <Route path='/tech-industry' element={<TechIndustry/>} />
+        <Route path='/new-user/:dbName' element={<TechIndustry1/>} />
         <Route path='safety-measures' element={<Safety/>} />
         <Route path='/manager-dashboard' element={<Manager/>} />
         <Route path='/dashboard' element={<DashboardCharts/>} />

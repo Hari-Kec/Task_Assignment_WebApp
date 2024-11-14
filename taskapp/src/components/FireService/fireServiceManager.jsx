@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
@@ -43,6 +43,7 @@ const FireServiceManager = () => {
       userId: '111',
       status: 'todo',
     };
+
     useEffect(() => {
       // Retrieve the manager's name from localStorage
       const storedName = localStorage.getItem('managerName');
@@ -118,6 +119,11 @@ const FireServiceManager = () => {
     }
   };
 
+  const handleDeleteEmployee = (employeeName) => {
+    setEmployees(employees.filter((employee) => employee.name !== employeeName));
+    alert(`Employee ${employeeName} deleted successfully!`);
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       <nav className="bg-gray-100 text-black shadow-md w-full fixed top-0 left-0 z-10">
@@ -137,7 +143,7 @@ const FireServiceManager = () => {
 
       <div className="pt-20 px-4 sm:px-10 py-5 mt-10 w-full">
         <div className="bg-white shadow-md rounded-lg p-4">
-        <h2 className="text-2xl font-bold mb-4">Fire Service Manager: {managerName}</h2>
+          <h2 className="text-2xl font-bold mb-4">Fire Service Manager: {managerName}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {employees.map((employee, index) => (
               <div key={index} className="bg-gray-200 p-4 rounded-lg shadow">
@@ -154,6 +160,12 @@ const FireServiceManager = () => {
                   onClick={() => handleShowStatusClick(employee.name)} // Show/hide status button
                 >
                   {visibleStatus[employee.name] ? 'Hide Status' : 'Show Status'}
+                </button>
+                <button
+                  className="mt-2 bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded transition duration-200 ml-2"
+                  onClick={() => handleDeleteEmployee(employee.name)} // Delete employee button
+                >
+                  Delete
                 </button>
 
                 {/* Task Status Display */}
@@ -258,20 +270,30 @@ const FireServiceManager = () => {
                 className="w-full p-2 mb-4 border border-gray-300 rounded"
                 required
               />
-              <input
-                type="date"
-                value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
-                className="w-full p-2 mb-4 border border-gray-300 rounded"
-                required
-              />
-              <input
-                type="date"
-                value={todayDate}
-                onChange={(e) => setTodayDate(e.target.value)}
-                className="w-full p-2 mb-4 border border-gray-300 rounded"
-                required
-              />
+              <div className="mb-4">
+                <label htmlFor="dueDate" className="block text-gray-700 mb-1">Due Date</label>
+                <input
+                  id="dueDate"
+                  type="date"
+                  value={dueDate}
+                  onChange={(e) => setDueDate(e.target.value)}
+                  className="w-full p-2 border border-gray-300 rounded"
+                  required
+                />
+              </div>
+
+              <div className="mb-4">
+                <label htmlFor="todayDate" className="block text-gray-700 mb-1">Today's Date</label>
+                <input
+                  id="todayDate"
+                  type="date"
+                  value={todayDate}
+                  onChange={(e) => setTodayDate(e.target.value)}
+                  className="w-full p-2 border border-gray-300 rounded"
+                  required
+                />
+              </div>
+
               <button
                 type="submit"
                 className="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-200"

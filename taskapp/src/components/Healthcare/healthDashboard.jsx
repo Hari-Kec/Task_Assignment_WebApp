@@ -80,7 +80,7 @@ const HealthCharts = () => {
 
   // Bar Chart Data
   const barData = {
-    labels: ['Akash', 'Rifath', 'Charlie', 'David'],
+    labels: ['Akash', 'Rifath', 'Preethi'],
     datasets: [
       {
         label: 'Tasks Completed',
@@ -118,7 +118,7 @@ const HealthCharts = () => {
 
   // Stacked Bar Chart Data
   const stackedBarData = {
-    labels: ['Akash', 'Rifath', 'Charlie', 'David'],
+    labels: ['Akash', 'Rifath', 'Preethi'],
     datasets: [
       { label: 'To Do', data: [3, 2, 4, 1], backgroundColor: '#ff6384' },
       { label: 'In Progress', data: [2, 3, 1, 2], backgroundColor: '#36a2eb' },

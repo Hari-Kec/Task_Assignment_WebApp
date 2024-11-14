@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
-const TechIndustry = () => {
-  const userId = '123'; // Replace with actual user ID
+const TechIndustry1 = () => {
+  const userId = '026'; // Replace with actual user ID
   const [todoTasks, setTodoTasks] = useState([]);
   const [employeeName, setEmployeeName] = useState('');
   const [employeeEmail, setEmployeeEmail] = useState('');
@@ -48,20 +48,6 @@ console.log("Current Date and Time: ", currentDateTime);
       })
       .catch((error) => console.error(error));
   };
-  const handleSignUp = async () => {
-  try {
-    const response = await fetch('http://localhost:5000/register-user', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password, role }),
-    });
-    const data = await response.json();
-    console.log(data);
-  } catch (error) {
-    console.error('Error during registration:', error);
-  }
-};
-
 
   const deleteTask = (taskId, status) => {
     if (window.confirm("Are you sure you want to delete this task?")) {
@@ -94,7 +80,7 @@ console.log("Current Date and Time: ", currentDateTime);
       taskName,
       dueDate,
       todayDate,
-      userId: '123',
+      userId: '026',
       status: 'todo' // Set initial status to 'todo'
     };
 
@@ -393,4 +379,4 @@ console.log("Current Date and Time: ", currentDateTime);
   );
 };
 
-export default TechIndustry;
+export default TechIndustry1;

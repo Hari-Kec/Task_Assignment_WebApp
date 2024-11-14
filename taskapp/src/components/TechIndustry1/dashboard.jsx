@@ -16,7 +16,7 @@ ChartJS.register(
   Legend
 );
 
-const FireServiceCharts = () => {
+const DashboardCharts = () => {
   // Line Chart Data
   const lineData = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -80,7 +80,7 @@ const FireServiceCharts = () => {
 
   // Bar Chart Data
   const barData = {
-    labels: ['Guru', 'Ajith', 'Karthik'],
+    labels: ['Alice', 'Bob', 'Charlie', 'David'],
     datasets: [
       {
         label: 'Tasks Completed',
@@ -98,7 +98,7 @@ const FireServiceCharts = () => {
       },
       title: {
         display: true,
-        text: 'Task Completion by Fire service workers',
+        text: 'Task Completion by Team Member',
       },
     },
     scales: {
@@ -118,7 +118,7 @@ const FireServiceCharts = () => {
 
   // Stacked Bar Chart Data
   const stackedBarData = {
-    labels: ['Guru', 'Ajith', 'Karthik'],
+    labels: ['Alice', 'Bob', 'Charlie', 'David'],
     datasets: [
       { label: 'To Do', data: [3, 2, 4, 1], backgroundColor: '#ff6384' },
       { label: 'In Progress', data: [2, 3, 1, 2], backgroundColor: '#36a2eb' },
@@ -146,19 +146,17 @@ const FireServiceCharts = () => {
 
   // Radar Chart Data
   const radarData = {
-    labels: ['Incident Assessment', 'Fire Suppression', 'Rescue Operations', 'Hazardous Materials Response', 'Medical Assistance', 'Equipment Maintenance', 'Post-Incident Review', 'Training and Drills'],
-
-
+    labels: ['On-Time Delivery', 'Task Quality', 'Communication', 'Collaboration', 'Creativity'],
     datasets: [
       {
-        label: 'Guru',
-        data: [85, 90, 75, 80, 95 ,70 , 80 , 80],
+        label: 'Alice',
+        data: [85, 90, 75, 80, 95],
         backgroundColor: 'rgba(255, 99, 132, 0.2)',
         borderColor: 'rgba(255, 99, 132, 1)',
       },
       {
-        label: 'Ajith',
-        data: [80, 85, 70, 85, 80 , 57 , 80 , 90, 80],
+        label: 'Bob',
+        data: [80, 85, 70, 85, 80],
         backgroundColor: 'rgba(54, 162, 235, 0.2)',
         borderColor: 'rgba(54, 162, 235, 1)',
       },
@@ -213,4 +211,4 @@ const FireServiceCharts = () => {
   );
 };
 
-export default FireServiceCharts;
+export default DashboardCharts;

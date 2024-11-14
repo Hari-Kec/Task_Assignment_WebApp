@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';  // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 
 const HealthManager = () => {
   const userId = '678';
   const [isTaskFormVisible, setIsTaskFormVisible] = useState(false);
-  const [taskEmployeeNames, setTaskEmployeeNames] = useState([]); // Multi-select employees
+  const [taskEmployeeNames, setTaskEmployeeNames] = useState([]);
   const [taskName, setTaskName] = useState('');
   const [dueDate, setDueDate] = useState('');
   const [employeeEmail, setEmployeeEmail] = useState('');
@@ -15,13 +15,13 @@ const HealthManager = () => {
   const [managerName, setManagerName] = useState('');
   const [employees, setEmployees] = useState([
     { name: 'Akash', department: 'Child Specialist', tasks: [] },
-    { name: 'Rifath', department: 'Physiotheraphy', tasks: [] },
+    { name: 'Rifath', department: 'Physiotherapy', tasks: [] },
     { name: 'Preethi', department: 'Dentist', tasks: [] },
   ]);
-  const [employeeTasks, setEmployeeTasks] = useState({}); // To store tasks for each employee
-  const [visibleStatus, setVisibleStatus] = useState({}); // Track visibility of task status
+  const [employeeTasks, setEmployeeTasks] = useState({});
+  const [visibleStatus, setVisibleStatus] = useState({});
 
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     navigate('/manager-login');
@@ -37,13 +37,6 @@ const HealthManager = () => {
       userId: '678',
       status: 'todo',
     };
-    useEffect(() => {
-      // Retrieve the manager's name from localStorage
-      const storedName = localStorage.getItem('managerName');
-      if (storedName) {
-        setManagerName(storedName);
-      }
-    }, []);
 
     const updatedEmployees = employees.map((employee) => {
       if (taskEmployeeNames.includes(employee.name)) {
@@ -87,8 +80,12 @@ const HealthManager = () => {
     alert('Employee added successfully!');
   };
 
+  const handleDeleteEmployee = (employeeName) => {
+    setEmployees(employees.filter((employee) => employee.name !== employeeName));
+    alert(`${employeeName} has been removed from the list.`);
+  };
+
   const fetchEmployeeTasks = (employeeName) => {
-    // Replace this URL with your actual endpoint
     axios.get(`http://localhost:5000/healthcare/${userId}`)
       .then((response) => {
         setEmployeeTasks((prev) => ({
@@ -120,7 +117,7 @@ const HealthManager = () => {
             <a href="/health-worker-dashboard" className="text-xl text-black">View Dashboard</a>
             <button
               className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded transition duration-200"
-              onClick={handleLogout}  // Trigger logout on click
+              onClick={handleLogout}
             >
               Logout
             </button>
@@ -130,7 +127,7 @@ const HealthManager = () => {
 
       <div className="pt-20 px-4 sm:px-10 py-5 mt-10 w-full">
         <div className="bg-white shadow-md rounded-lg p-4">
-        <h2 className="text-2xl font-bold mb-4">Dean Name: {managerName}</h2>
+          <h2 className="text-2xl font-bold mb-4">Dean Name: {managerName}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {employees.map((employee, index) => (
               <div key={index} className="bg-gray-200 p-4 rounded-lg shadow">
@@ -138,15 +135,21 @@ const HealthManager = () => {
                 <p className="text-gray-600">{employee.department}</p>
                 <button
                   className="mt-2 bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded transition duration-200"
-                  onClick={() => setIsTaskFormVisible(true)} // Show task form
+                  onClick={() => setIsTaskFormVisible(true)}
                 >
                   Add Task
                 </button>
                 <button
-                  className="mt-2 bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded transition duration-200 ml-2" // Added margin-left
-                  onClick={() => handleShowStatusClick(employee.name)} // Show/hide status button
+                  className="mt-2 bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded transition duration-200 ml-2"
+                  onClick={() => handleShowStatusClick(employee.name)}
                 >
                   {visibleStatus[employee.name] ? 'Hide Status' : 'Show Status'}
+                </button>
+                <button
+                  className="mt-2 bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded transition duration-200 ml-2"
+                  onClick={() => handleDeleteEmployee(employee.name)}
+                >
+                  Delete
                 </button>
 
                 {/* Task Status Display */}
@@ -250,20 +253,30 @@ const HealthManager = () => {
                 className="w-full p-2 mb-4 border border-gray-300 rounded"
                 required
               />
-              <input
-                type="date"
-                value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
-                className="w-full p-2 mb-4 border border-gray-300 rounded"
-                required
-              />
-              <input
-                type="date"
-                value={todayDate}
-                onChange={(e) => settodayDate(e.target.value)}
-                className="w-full p-2 mb-4 border border-gray-300 rounded"
-                required
-              />
+              <div className="mb-4">
+                <label htmlFor="dueDate" className="block text-gray-700 mb-1">Due Date</label>
+                <input
+                  id="dueDate"
+                  type="date"
+                  value={dueDate}
+                  onChange={(e) => setDueDate(e.target.value)}
+                  className="w-full p-2 border border-gray-300 rounded"
+                  required
+                />
+              </div>
+
+              <div className="mb-4">
+                <label htmlFor="todayDate" className="block text-gray-700 mb-1">Today's Date</label>
+                <input
+                  id="todayDate"
+                  type="date"
+                  value={todayDate}
+                  onChange={(e) => settodayDate(e.target.value)}
+                  className="w-full p-2 border border-gray-300 rounded"
+                  required
+                />
+              </div>
+
               <button
                 type="submit"
                 className="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-200"

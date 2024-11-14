@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import loginImage from '../../assets/taskLogo.png'; // Path to your image asset
 
 const ManagerLogin = () => {
@@ -10,7 +10,6 @@ const ManagerLogin = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [companyName, setCompanyName] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
@@ -28,7 +27,6 @@ const ManagerLogin = () => {
     setEmail('');
     setName('');
     setPassword('');
-    setConfirmPassword('');
     setSelectedRole('');
     setCompanyName('');
   };
@@ -79,13 +77,8 @@ const ManagerLogin = () => {
   };
 
   const handleRegister = () => {
-    if (!name || !email || !password || !confirmPassword || !selectedRole || !companyName) {
+    if (!name || !email || !password || !selectedRole || !companyName) {
       alert('Please fill in all fields.');
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      alert('Passwords do not match.');
       return;
     }
 
@@ -181,25 +174,6 @@ const ManagerLogin = () => {
                 <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
               </span>
             </div>
-
-            {/* Confirm password for register mode */}
-            {!isLoginMode && (
-              <div className="relative mb-4">
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder="Confirm Password"
-                  required={!isLoginMode}
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                {confirmPassword && confirmPassword === password && (
-                  <span className="absolute inset-y-0 right-3 flex items-center text-green-500">
-                    <FontAwesomeIcon icon={faCheckCircle} />
-                  </span>
-                )}
-              </div>
-            )}
 
             <label htmlFor="role" className="block text-gray-700 mb-2">
               Select your manager role:

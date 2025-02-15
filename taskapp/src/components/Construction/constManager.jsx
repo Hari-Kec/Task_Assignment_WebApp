@@ -17,7 +17,7 @@ const ConstManager = () => {
     { name: 'Rajesh', department: 'Site Supervisor', tasks: [] },
   ]);
 
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate(); 
 
   const handleTaskFormSubmit = (e) => {
     e.preventDefault();
@@ -29,7 +29,7 @@ const ConstManager = () => {
       userId: '123',
     };
 
-    // Loop through selected employees and add the task to each
+
     const updatedEmployees = employees.map((employee) => {
       if (taskEmployeeNames.includes(employee.name)) {
         return {
@@ -42,7 +42,6 @@ const ConstManager = () => {
 
     setEmployees(updatedEmployees);
 
-    // Send task data to the backend for each employee
     taskEmployeeNames.forEach((employeeName) => {
       axios.post('http://localhost:5000/construction', {
         ...newTask,
@@ -56,7 +55,6 @@ const ConstManager = () => {
         });
     });
 
-    // Clear form fields
     setTaskEmployeeNames([]);
     setTaskName('');
     setDueDate('');
@@ -66,7 +64,6 @@ const ConstManager = () => {
   };
 
   useEffect(() => {
-    // Retrieve the manager's name from localStorage
     const storedName = localStorage.getItem('managerName');
     if (storedName) {
       setManagerName(storedName);
@@ -89,13 +86,11 @@ const ConstManager = () => {
   };
 
   const handleLogout = () => {
-    // Handle any logout logic (clear tokens, etc.) and navigate to the login page
     navigate('/manager-login');
   };
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Navbar */}
       <nav className="bg-gray-100 text-black shadow-md w-full fixed top-0 left-0 z-10">
         <div className="max-w-full px-4 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-semibold">Construction Management</h1>
@@ -103,7 +98,7 @@ const ConstManager = () => {
             <a href="/const-worker-dashboard" className="text-xl text-black">View Dashboard</a>
             <button
               className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded transition duration-200"
-              onClick={handleLogout} // Trigger logout on click
+              onClick={handleLogout}
             >
               Logout
             </button>
@@ -121,13 +116,13 @@ const ConstManager = () => {
                 <p className="text-gray-600">{employee.department}</p>
                 <button
                   className="mt-2 bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded transition duration-200"
-                  onClick={() => setIsTaskFormVisible(true)} // Show task form
+                  onClick={() => setIsTaskFormVisible(true)}
                 >
                   Add Task
                 </button>
                 <button
                   className="mt-2 bg-red-500 hover:bg-red-600 text-white py-1 px-2 rounded transition duration-200"
-                  onClick={() => handleDeleteEmployee(employee.name)} // Delete employee
+                  onClick={() => handleDeleteEmployee(employee.name)} 
                 >
                   Delete Employee
                 </button>
@@ -147,8 +142,6 @@ const ConstManager = () => {
               </div>
             ))}
           </div>
-
-          {/* Add Employee Form */}
           <h3 className="text-lg font-semibold mt-4">Add Employee</h3>
           <form onSubmit={handleAddEmployee} className="mb-4">
             <input
@@ -177,7 +170,7 @@ const ConstManager = () => {
         </div>
       </div>
 
-      {/* Task Form for Adding Tasks */}
+
       {isTaskFormVisible && (
         <div className="fixed inset-0 bg-gray-700 bg-opacity-50 flex items-center justify-center z-20">
           <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">

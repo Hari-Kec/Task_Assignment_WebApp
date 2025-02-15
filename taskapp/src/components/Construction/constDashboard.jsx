@@ -2,7 +2,6 @@ import React from 'react';
 import { Line, Bar, Doughnut, Radar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ArcElement, BarElement, RadialLinearScale } from 'chart.js';
 
-// Register the required components from Chart.js
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -17,7 +16,7 @@ ChartJS.register(
 );
 
 const ConstCharts = () => {
-  // Line Chart Data
+
   const lineData = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     datasets: [
@@ -57,7 +56,6 @@ const ConstCharts = () => {
     },
   };
 
-  // Pie Chart Data
   const pieData = {
     labels: ['To Do', 'In Progress', 'In Review', 'Done'],
     datasets: [
@@ -78,7 +76,7 @@ const ConstCharts = () => {
     },
   };
 
-  // Bar Chart Data
+
   const barData = {
     labels: ['Arjun', 'Megha', 'Rajesh'],
     datasets: [
@@ -116,7 +114,6 @@ const ConstCharts = () => {
     },
   };
 
-  // Stacked Bar Chart Data
   const stackedBarData = {
     labels: ['Arjun', 'Megha', 'Rajesh'],
     datasets: [
@@ -144,7 +141,7 @@ const ConstCharts = () => {
     },
   };
 
-  // Radar Chart Data
+
   const radarData = {
     labels: ['Site Preparation', 'Foundation Work', 'Framing', 'Roofing', 'Electrical Work','Plumbing','Finishing Work','Inspection'],
     datasets: [

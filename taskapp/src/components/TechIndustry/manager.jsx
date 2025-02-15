@@ -52,7 +52,7 @@ const Manager = () => {
 
     selectedEmployees.forEach((employee) => {
       const taskForEmployee = { ...newTask, employeeName: employee };
-      axios.post('http://localhost:5000/tech-tasks', taskForEmployee)
+      axios.post('http://3.26.234.195:5000/tech-tasks', taskForEmployee)
         .then((response) => {
           console.log('Task added for', employee, response.data);
         })
@@ -102,7 +102,7 @@ const Manager = () => {
   };
 
   const fetchEmployeeTasks = (employeeName) => {
-    axios.get(`http://localhost:5000/tech-tasks/${userId}`)
+    axios.get(`http://3.26.234.195:5000/tech-tasks/${userId}`)
       .then((response) => {
         setEmployeeTasks((prev) => ({
           ...prev,

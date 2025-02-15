@@ -12,11 +12,15 @@ const app = express();
 app.use(cors());
 // app.use(json());
 
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+})
+
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 
 
-const MONGODB_URI = "mongodb+srv://hari:1234@cluster0.6zbix.mongodb.net/admin";
+const MONGODB_URI = process.env.MONGODB_URI;
 console.log(MONGODB_URI);
 
 if (!MONGODB_URI) {
@@ -141,6 +145,6 @@ app.use('/api/chat', createProxyMiddleware({
 }));
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

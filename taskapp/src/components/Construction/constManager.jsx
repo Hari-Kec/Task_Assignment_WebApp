@@ -43,7 +43,8 @@ const ConstManager = () => {
     setEmployees(updatedEmployees);
 
     taskEmployeeNames.forEach((employeeName) => {
-      axios.post('http://localhost:5000/construction', {
+      axios.post('http://3.26.234.195:5000/construction', {
+        
         ...newTask,
         employeeName,
       })

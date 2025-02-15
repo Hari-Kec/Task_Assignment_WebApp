@@ -51,7 +51,7 @@ const HealthManager = () => {
     setEmployees(updatedEmployees);
 
     taskEmployeeNames.forEach((employeeName) => {
-      axios.post('http://localhost:5000/healthcare', {
+      axios.post('http://3.26.234.195:5000/healthcare', {
         ...newTask,
         employeeName,
       })
@@ -86,7 +86,7 @@ const HealthManager = () => {
   };
 
   const fetchEmployeeTasks = (employeeName) => {
-    axios.get(`http://localhost:5000/healthcare/${userId}`)
+    axios.get(`http://3.26.234.195:5000/healthcare/${userId}`)
       .then((response) => {
         setEmployeeTasks((prev) => ({
           ...prev,

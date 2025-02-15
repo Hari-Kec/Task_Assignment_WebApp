@@ -26,7 +26,7 @@ console.log("Current Date and Time: ", currentDateTime);
    // Initialize useNavigate
 
   useEffect(() => {
-    axios.get(`http://3.26.234.195:5000/tech-tasks/${userId}`)
+    axios.get(`https://3.26.234.195:5000/tech-tasks/${userId}`)
       .then((response) => {
         const tasks = response.data.map(task => ({
           ...task,
@@ -42,7 +42,7 @@ console.log("Current Date and Time: ", currentDateTime);
   
    const moveTask = (task, source, target, newStatus) => {
     source((prevTasks) => prevTasks.filter((t) => t._id !== task._id));
-    axios.put(`http://3.26.234.195:5000/tech-tasks/${task._id}`, { ...task, status: newStatus })
+    axios.put(`https://3.26.234.195:5000/tech-tasks/${task._id}`, { ...task, status: newStatus })
       .then((response) => {
         target((prevTasks) => [...prevTasks, response.data]);
       })
@@ -50,7 +50,7 @@ console.log("Current Date and Time: ", currentDateTime);
   };
   const handleSignUp = async () => {
   try {
-    const response = await fetch('http://3.26.234.195:5000/register-user', {
+    const response = await fetch('https://3.26.234.195:5000/register-user', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password, role }),
@@ -65,7 +65,7 @@ console.log("Current Date and Time: ", currentDateTime);
 
   const deleteTask = (taskId, status) => {
     if (window.confirm("Are you sure you want to delete this task?")) {
-    axios.delete(`http://3.26.234.195:5000/tech-tasks/${taskId}`)
+    axios.delete(`https://3.26.234.195:5000/tech-tasks/${taskId}`)
       .then(() => {
         // Remove the task from the corresponding list based on status
         if (status === 'todo') {
@@ -98,7 +98,7 @@ console.log("Current Date and Time: ", currentDateTime);
       status: 'todo' // Set initial status to 'todo'
     };
 
-    axios.post('http://3.26.234.195:5000/tech-tasks', task)
+    axios.post('https://3.26.234.195:5000/tech-tasks', task)
       .then((response) => {
         console.log('Task added:', response.data);
         alert('TASK ADDED SUCCESSFULLY');
@@ -116,7 +116,7 @@ console.log("Current Date and Time: ", currentDateTime);
 
   const handleQuerySubmit = (event) => {
     event.preventDefault();
-    axios.post('http://3.26.234.195:5000/ask-query', { query })
+    axios.post('https://3.26.234.195:5000/ask-query', { query })
       .then((response) => {
         setResponse(response.data.response);
       })

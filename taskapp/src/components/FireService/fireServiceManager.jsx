@@ -68,7 +68,7 @@ const FireServiceManager = () => {
     // Send task data to the backend for each selected employee
     selectedEmployees.forEach((employeeName) => {
       const taskData = { ...newTask, employeeName, employeeEmail };
-      axios.post('http://3.26.234.195:5000/fireservice', taskData)
+      axios.post('https://3.26.234.195:5000/fireservice', taskData)
         .then((response) => {
           console.log('Task added:', response.data);
         })
@@ -98,7 +98,7 @@ const FireServiceManager = () => {
 
   const fetchEmployeeTasks = (employeeName) => {
     // Replace this URL with your actual endpoint
-    axios.get(`http://3.26.234.195:5000/fireservice/${userId}`)
+    axios.get(`https://3.26.234.195:5000/fireservice/${userId}`)
       .then((response) => {
         setEmployeeTasks((prev) => ({
           ...prev,

@@ -21,7 +21,7 @@ const Construction = () => {
   const [todayDate , settodayDate]=useState('');
 
   useEffect(() => {
-    axios.get(`http://3.26.234.195:5000/construction/${userId}`)
+    axios.get(`https://3.26.234.195:5000/construction/${userId}`)
 
 
       .then((response) => {
@@ -39,7 +39,7 @@ const Construction = () => {
 
   const moveTask = (task, source, target, newStatus) => {
     source((prevTasks) => prevTasks.filter((t) => t._id !== task._id));
-    axios.put(`http://3.26.234.195:5000/construction/${task._id}`, { ...task, status: newStatus })
+    axios.put(`https://3.26.234.195:5000/construction/${task._id}`, { ...task, status: newStatus })
 
 
       .then((response) => {
@@ -60,7 +60,7 @@ const Construction = () => {
       status: 'todo' 
     };
 
-    axios.post('http://3.26.234.195:5000/construction', task)
+    axios.post('https://3.26.234.195:5000/construction', task)
       .then((response) => {
 
         console.log('Task added:', response.data);
@@ -77,7 +77,7 @@ const Construction = () => {
       });
   };
   const deleteTask = (taskId, status) => {
-    axios.delete(`http://3.26.234.195:5000/tech-tasks/${taskId}`)
+    axios.delete(`https://3.26.234.195:5000/tech-tasks/${taskId}`)
       .then(() => {
         if (status === 'todo') {
           setTodoTasks((prevTasks) => prevTasks.filter((task) => task._id !== taskId));
@@ -94,7 +94,7 @@ const Construction = () => {
 
   const handleQuerySubmit = (event) => {
     event.preventDefault();
-    axios.post('http://3.26.234.195:5000/ask-query', { query })
+    axios.post('https://3.26.234.195:5000/ask-query', { query })
       .then((response) => {
         setResponse(response.data.response);
       })

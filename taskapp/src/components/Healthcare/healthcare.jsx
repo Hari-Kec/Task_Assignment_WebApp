@@ -21,7 +21,7 @@ const Healthcare = () => {
   const [todayDate , settodayDate]=useState('');// Initialize useNavigate
 
   useEffect(() => {
-    axios.get(`http://3.26.234.195:5000/healthcare/${userId}`)
+    axios.get(`https://3.26.234.195:5000/healthcare/${userId}`)
 
 
       .then((response) => {
@@ -39,7 +39,7 @@ const Healthcare = () => {
 
   const moveTask = (task, source, target, newStatus) => {
     source((prevTasks) => prevTasks.filter((t) => t._id !== task._id));
-    axios.put(`http://3.26.234.195:5000/healthcare/${task._id}`, { ...task, status: newStatus })
+    axios.put(`https://3.26.234.195:5000/healthcare/${task._id}`, { ...task, status: newStatus })
 
 
       .then((response) => {
@@ -60,7 +60,7 @@ const Healthcare = () => {
       status: 'todo' // Set initial status to 'todo'
     };
 
-    axios.post('http://3.26.234.195:5000/healthcare', task)
+    axios.post('https://3.26.234.195:5000/healthcare', task)
       .then((response) => {
         // Handle successful response
         console.log('Task added:', response.data);
@@ -77,7 +77,7 @@ const Healthcare = () => {
       });
   };
   const deleteTask = (taskId, status) => {
-    axios.delete(`http://3.26.234.195:5000/healthTasks/${taskId}`)
+    axios.delete(`https://3.26.234.195:5000/healthTasks/${taskId}`)
       .then(() => {
         // Remove the task from the corresponding list based on status
         if (status === 'todo') {
@@ -95,7 +95,7 @@ const Healthcare = () => {
 
   const handleQuerySubmit = (event) => {
     event.preventDefault();
-    axios.post('http://3.26.234.195:5000/ask-query', { query })
+    axios.post('https://3.26.234.195:5000/ask-query', { query })
       .then((response) => {
         setResponse(response.data.response);
       })

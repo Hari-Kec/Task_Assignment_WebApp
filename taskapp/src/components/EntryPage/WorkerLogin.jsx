@@ -35,7 +35,7 @@ const WorkerLogin = () => {
       navigate(isExistingUser.path);
     } else if (selectedRole) {
       try {
-        const response = await fetch('http://3.26.234.195:5000/register-user', {
+        const response = await fetch('https://3.26.234.195:5000/register-user', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password, role: selectedRole })
